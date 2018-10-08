@@ -1,0 +1,46 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+ 
+```{r}
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+library(scales)
+library("ggthemes")
+library("sjPlot")
+
+```
+
+```{r}
+raw <- read.csv('C:/Users/kariyya/Documents/GitHub/EastWatch1/BS_stats.csv' , stringsAsFactors = FALSE)
+rawd <- raw %>% mutate_if(sapply(raw, is.character), as.numeric)
+
+rawd <- data.frame(rawd)
+rawd$Date <- as.Date(raw$Date,format = "%Y-%m-%d")
+rawd$Age <- as.character(raw$Age)
+rawd$Tm <- as.factor(raw$Tm)
+rawd$X <- as.character(raw$X)
+rawd$Opp <- as.factor(raw$Opp)
+rawd$X.1 <- as.character(raw$X.1)
+rawd$MP <- as.character(raw$MP)
+names(rawd)[names(rawd) == "X..."] <- "PlusMinus"
+names(rawd)[names(rawd) == "FG."] <- "FGper"
+names(rawd)[names(rawd) == "X3P"] <- "3P"
+names(rawd)[names(rawd) == "X3PA"] <- "3PA"
+names(rawd)[names(rawd) == "X3P."] <- "3Pper"
+names(rawd)[names(rawd) == "FT."] <- "FTper"
+
+str(rawd)
+head(rawd)
+```
+
+
+Ben Simmon's histrocal run - 2018-03-15 to 2018-04-24
+
+```{r}
+rawd %>% filter(Date > "2018-03-15") %>% select(Date, Opp, AST, PTS, STL, TRB, PlusMinus, FGper)
+```
+
